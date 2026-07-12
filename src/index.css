@@ -47,13 +47,13 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--ink);
-  background-image: linear-gradient(to bottom, var(--vermillion) 0%, var(--vermillion) 50vh, var(--ink) 50vh, var(--ink) 100%);
-  background-attachment: fixed;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: transparent;
+  background-color: var(--vermillion);
+  background-image: linear-gradient(to bottom, var(--vermillion) 0%, var(--vermillion) 50vh, var(--ink) 50vh, var(--ink) 100%);
+  background-attachment: fixed;
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;
