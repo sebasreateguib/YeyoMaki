@@ -344,7 +344,7 @@
 }
 
 .hero-scroll-hint {
-  display: none;
+  display: flex;
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
