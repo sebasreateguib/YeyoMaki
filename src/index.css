@@ -52,7 +52,9 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--ink);
+  background-color: #1a0609; /* Very dark subtle red fallback */
+  background-image: linear-gradient(to bottom, #24070d 0%, var(--ink) 100vh);
+  background-attachment: fixed;
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;
