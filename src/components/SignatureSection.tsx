@@ -19,7 +19,6 @@ export function SignatureSection() {
 
   return (
     <section className="signature-section section-pad" id="signature" ref={sectionRef}>
-      <div className="signature-bg-img" />
       <div className="seighaiba-bg seigaiha-bg" />
       <div className="container">
         <div className="signature-grid">

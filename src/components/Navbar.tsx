@@ -24,7 +24,7 @@ export function Navbar() {
           <li><a href="#horarios">Horarios</a></li>
         </ul>
 
-        <a href="#contacto" className="navbar-cta">Reservar</a>
+        <a href="#contacto" className="navbar-cta">Pedir</a>
 
         <button className="navbar-mobile-toggle" aria-label="Menu">
           <span /><span /><span />

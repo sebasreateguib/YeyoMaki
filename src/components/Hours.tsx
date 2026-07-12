@@ -61,7 +61,7 @@ export function Hours() {
                 </div>
                 <div>
                   <div className="hours-mode-title">Presencial</div>
-                  <div className="hours-mode-sub">Come aquí con nosotros</div>
+                  <div className="hours-mode-sub">Av. Víctor Raúl Haya de la Torre 438, La Perla 07016</div>
                 </div>
               </div>
             </div>

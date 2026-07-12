@@ -148,7 +148,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow: clip; /* clip instead of hidden so sticky/absolute children aren't cropped */
   background: var(--ink);
 }
 
@@ -205,7 +205,7 @@
 
 .hero-jp-text {
   position: absolute;
-  right: 7%;
+  right: 2%;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-jp);
@@ -315,6 +315,151 @@
   height: 60px;
   background: linear-gradient(180deg, var(--gold), transparent);
   animation: floatY 2s ease-in-out infinite;
+}
+
+/* ─── Editorial 3-column hero layout ─── */
+.hero-layout {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  /* center gap = video start width; side columns split remaining space */
+  grid-template-columns: 1fr clamp(260px, 28vw, 340px) 1fr;
+  align-items: center;
+  /* generous padding so neither column hugs the edge */
+  padding: 7rem clamp(1.5rem, 5vw, 5rem) 5rem;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.hero-col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-right: 2rem;
+  min-width: 0;         /* critical: allows grid child to shrink below content size */
+  overflow: clip;
+  animation: fadeInUp 0.9s 0.2s both;
+}
+
+/* Scale title down inside the 3-col layout so it fits its column */
+.hero-layout .hero-title {
+  font-size: clamp(2.8rem, 6.5vw, 7rem);
+}
+
+.hero-col-center {
+  pointer-events: none;
+}
+
+.hero-col-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 2rem;
+  gap: 1.5rem;
+  min-width: 0;         /* critical: allows grid child to shrink below content size */
+  animation: fadeInUp 0.9s 0.5s both;
+}
+
+.hero-divider-line {
+  width: 50px;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--vermillion), transparent);
+  margin: 1.25rem 0;
+}
+
+.hero-tagline {
+  font-family: var(--font-jp);
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  color: rgba(245, 240, 232, 0.55);
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+  font-style: italic;
+}
+
+.hero-scroll-hint-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  opacity: 0.6;
+  animation: fadeIn 1s 1.5s both;
+}
+
+.hero-scroll-hint-inline span {
+  font-family: var(--font-jp);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: rgba(245, 240, 232, 0.5);
+  text-transform: uppercase;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    min-height: 100vh;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    padding: 6rem 1.5rem 5rem;
+    gap: 0;
+  }
+
+  .hero-col-left {
+    align-items: center;
+    padding-right: 0;
+    order: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* On mobile the center spacer matches the video size */
+  .hero-col-center {
+    order: 2;
+    height: 240px;
+    width: 100%;
+  }
+
+  .hero-col-right {
+    align-items: center;
+    padding-left: 0;
+    order: 3;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .hero-col-right .hero-subtitle {
+    max-width: 320px;
+    font-size: 0.95rem;
+  }
+
+  .hero-col-right .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-divider-line {
+    background: linear-gradient(90deg, transparent, var(--vermillion), transparent);
+    width: 60px;
+  }
+
+  .hero-scroll-hint-inline {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 14vw, 6rem) !important;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    justify-content: center;
+  }
 }
 
 .hero-petals {
@@ -589,16 +734,16 @@
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5px;
-  background: rgba(201, 168, 76, 0.1);
+  gap: 1rem;
 }
 
 .menu-item {
   background: var(--ink-soft);
   padding: 2rem 2rem;
   position: relative;
-  transition: background 0.3s;
+  transition: background 0.3s, border-color 0.3s;
   cursor: none;
+  border: 1px solid rgba(201, 168, 76, 0.1);
 }
 
 .menu-item:hover {
@@ -1386,4 +1531,14 @@
   color: var(--gold);
   border-color: var(--gold);
   transform: translateY(-3px);
+}
+
+.footer-social a[aria-label="Instagram"]:hover {
+  color: #E1306C;
+  border-color: #E1306C;
+}
+
+.footer-social a[aria-label="WhatsApp"]:hover {
+  color: #25D366;
+  border-color: #25D366;
 }

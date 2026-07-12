@@ -24,7 +24,7 @@ export function CTASection() {
         <p className="cta-sub reveal">We love what we do — y tú lo vas a amar también.</p>
 
         <div className="cta-actions reveal">
-          <a href="https://wa.me/51999999999" className="btn-cta-white" target="_blank" rel="noopener">
+          <a href="https://wa.me/51942109818" className="btn-cta-white" target="_blank" rel="noopener">
             WhatsApp →
           </a>
           <a href="https://instagram.com/yeyomaki" className="btn-cta-outline-white" target="_blank" rel="noopener">
