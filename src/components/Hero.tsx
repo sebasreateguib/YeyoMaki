@@ -130,7 +130,7 @@ export function Hero() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          videoElementRef.current?.play().catch(() => {});
+          videoElementRef.current?.play().catch(() => { });
         } else {
           videoElementRef.current?.pause();
         }
@@ -153,11 +153,11 @@ export function Hero() {
 
   // Video dimensions — start width must match .hero-col-center: clamp(280px, 25vw, 320px)
   const startW = isMobile ? Math.min(300, vw * 0.8) : Math.min(320, Math.max(280, vw * 0.25));
-  const endW   = vw * (isMobile ? 0.95 : 0.95);
-  const width  = startW + scrollProgress * (endW - startW);
+  const endW = vw * (isMobile ? 0.95 : 0.95);
+  const width = startW + scrollProgress * (endW - startW);
 
   const startH = isMobile ? 220 : 480; // Portrait portal on desktop
-  const endH   = vh * 0.88;
+  const endH = vh * 0.88;
   const height = startH + scrollProgress * (endH - startH);
   const radius = 20 - scrollProgress * 20;
 

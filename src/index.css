@@ -52,15 +52,30 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--ink);
+  background-color: var(--vermillion);
+  background-image: linear-gradient(to bottom, var(--vermillion) 0%, var(--vermillion) 50vh, var(--ink) 50vh, var(--ink) 100%);
+  background-attachment: fixed;
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;
 }
 
 #root {
-  background: linear-gradient(180deg, rgba(200, 16, 46, 0.4) 0%, var(--ink) 25vh, var(--ink) 100%);
+  background: var(--ink);
   min-height: 100vh;
+  position: relative;
+}
+
+#root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25vh;
+  background: linear-gradient(180deg, rgba(200, 16, 46, 0.25) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Custom Cursor */

@@ -21,7 +21,7 @@ export function Hours() {
       <div className="seigaiha-bg" />
       <div className="container">
         <div className="hours-inner">
-          <div className="hours-img-wrap reveal-left">
+          <div className="hours-img-wrap hours-desktop-img reveal-left">
             <img
               src="/assets/content/yeyo12.jpeg"
               alt="Yeyo Maki horarios"
@@ -70,6 +70,15 @@ export function Hours() {
               美味しい瞬間 — Momentos deliciosos.<br />
               Lunes cerrado. Te esperamos con las mejores tablas.
             </p>
+
+            <div className="hours-img-wrap hours-mobile-img">
+              <img
+                src="/assets/content/yeyo12.jpeg"
+                alt="Yeyo Maki horarios"
+                className="hours-img"
+              />
+              <div className="hours-img-overlay" />
+            </div>
 
             <div style={{ marginTop: '2rem' }}>
               <a href="#contacto" className="btn-primary" style={{ textDecoration: 'none' }}>

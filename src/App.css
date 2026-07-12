@@ -1368,6 +1368,10 @@
   position: relative;
 }
 
+.hours-mobile-img {
+  display: none;
+}
+
 .hours-img {
   width: 100%;
   aspect-ratio: 3/4;
@@ -1502,8 +1506,13 @@
     gap: 3rem;
   }
 
-  .hours-img-wrap {
+  .hours-desktop-img {
     display: none;
+  }
+
+  .hours-mobile-img {
+    display: block;
+    margin: 2rem 0;
   }
 }
 
