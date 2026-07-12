@@ -45,12 +45,12 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background-color: var(--vermillion);
+  background-color: var(--ink-soft);
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--vermillion);
+  background-color: var(--ink-soft);
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;

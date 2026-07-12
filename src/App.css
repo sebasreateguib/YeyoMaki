@@ -6,14 +6,27 @@
   right: 0;
   z-index: 1000;
   padding: 1.5rem 0;
+  transition: padding 0.4s var(--ease-smooth);
+}
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  border-bottom: 1px solid transparent;
   transition: all 0.4s var(--ease-smooth);
 }
 
 .navbar.scrolled {
+  padding: 1rem 0;
+}
+
+.navbar.scrolled::before {
   background: rgba(13, 10, 8, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding: 1rem 0;
   border-bottom: 1px solid rgba(201, 168, 76, 0.15);
 }
 

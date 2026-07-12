@@ -11,7 +11,7 @@ export function Navbar() {
   }, [])
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
       <div className="container navbar-inner">
         <a href="#top" className="navbar-logo" aria-label="Yeyo Maki Home" onClick={() => setMenuOpen(false)}>
           <img src="/assets/content/YeyoBanner.png" alt="Yeyo Maki Logo" />
