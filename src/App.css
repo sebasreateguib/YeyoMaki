@@ -201,7 +201,7 @@
   align-items: center;
   overflow: clip;
   /* clip instead of hidden so sticky/absolute children aren't cropped */
-  background: var(--ink);
+  background: transparent;
 }
 
 .hero-bg {
