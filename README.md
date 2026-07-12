@@ -1,6 +1,6 @@
 # Yeyo Maki 🍣
 
-![Yeyo Maki](assets/content/YeyoBanner.png)
+<img src="assets/content/yeyo.jpeg" alt="Yeyo Maki" width="20%">
 
 Una aplicación web moderna y elegante para **Yeyo Maki**, una marca de makis artesanales que fusiona la precisión japonesa con sabores peruanos auténticos ("Fusión nikkei. Alma peruana.").
 
