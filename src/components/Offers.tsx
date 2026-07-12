@@ -23,7 +23,7 @@ export function Offers() {
         <div className="offers-header reveal">
           <p className="section-eyebrow">Promociones</p>
           <h2 className="section-title text-gold">
-            Ofertas de la Casa
+            YEYOFERTAS!!
           </h2>
           <p className="section-subtitle">Las promos que no puedes dejar pasar</p>
         </div>

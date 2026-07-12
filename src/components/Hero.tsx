@@ -151,12 +151,12 @@ export function Hero() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 844;
   const isMobile = vw < 768;
 
-  // Video dimensions — start width must match .hero-col-center: clamp(260px, 28vw, 340px)
-  const startW = isMobile ? Math.min(300, vw * 0.8) : Math.min(340, Math.max(260, vw * 0.28));
+  // Video dimensions — start width must match .hero-col-center: clamp(280px, 25vw, 320px)
+  const startW = isMobile ? Math.min(300, vw * 0.8) : Math.min(320, Math.max(280, vw * 0.25));
   const endW   = vw * (isMobile ? 0.95 : 0.95);
   const width  = startW + scrollProgress * (endW - startW);
 
-  const startH = isMobile ? 220 : 300;
+  const startH = isMobile ? 220 : 480; // Portrait portal on desktop
   const endH   = vh * 0.88;
   const height = startH + scrollProgress * (endH - startH);
   const radius = 20 - scrollProgress * 20;
@@ -205,12 +205,6 @@ export function Hero() {
             <a href="#nosotros" className="btn-outline">Nuestra Historia</a>
           </div>
         </div>
-      </div>
-
-      {/* ─── Scroll Hint (Centered below video) ─── */}
-      <div className="hero-scroll-hint" style={{ opacity: fadeOut, pointerEvents: fadeOut < 0.1 ? 'none' : 'auto' }}>
-        <div className="hero-scroll-line" />
-        <span>Scroll</span>
       </div>
 
       {/* ─── Video portal — absolutely centered, expands on scroll ─── */}
@@ -274,6 +268,12 @@ export function Hero() {
           />
         </div>
       )}
+
+      {/* ─── Scroll Hint (Centered below video on desktop) ─── */}
+      <div className="hero-scroll-hint" style={{ opacity: fadeOut, pointerEvents: fadeOut < 0.1 ? 'none' : 'auto' }}>
+        <div className="hero-scroll-line" />
+        <span>Scroll</span>
+      </div>
     </section>
   );
 }
