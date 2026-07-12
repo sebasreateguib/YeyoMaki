@@ -116,9 +116,29 @@ function Petals() {
 export function Hero() {
   const scrollProgress = useScrollExpand();
   const videoRef = useRef<HTMLDivElement>(null);
+  const videoElementRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoElementRef.current?.play().catch(() => {});
+        } else {
+          videoElementRef.current?.pause();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (videoElementRef.current) {
+      observer.observe(videoElementRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const fadeOut = Math.max(0, 1 - scrollProgress * 2.5);
@@ -208,6 +228,7 @@ export function Hero() {
         }}
       >
         <video
+          ref={videoElementRef}
           src="/assets/content/SushiChefVideo.mp4"
           autoPlay
           muted

@@ -1,6 +1,6 @@
 # Yeyo Maki 🍣
 
-![Yeyo Maki](public/assets/content/YeyoBanner.png)
+![Yeyo Maki](assets/content/YeyoBanner.png)
 
 Una aplicación web moderna y elegante para **Yeyo Maki**, una marca de makis artesanales que fusiona la precisión japonesa con sabores peruanos auténticos ("Fusión nikkei. Alma peruana.").
 
@@ -49,32 +49,5 @@ YeyoMaki/
 ├── tsconfig.json
 └── vite.config.ts
 ```
-
-## ⚙️ Instalación y Uso
-
-Sigue estos pasos para correr el proyecto localmente:
-
-1. **Clona el repositorio o abre la carpeta del proyecto** en tu terminal.
-2. **Instala las dependencias**:
-   ```bash
-   npm install
-   ```
-3. **Inicia el servidor de desarrollo**:
-   ```bash
-   npm run dev
-   ```
-4. Abre tu navegador y ve a `http://localhost:5173/`.
-
-## 📦 Construcción para Producción
-
-Para compilar el proyecto y prepararlo para producción (minificado y optimizado), ejecuta:
-
-```bash
-npm run build
-```
-
-Los archivos estáticos generados se encontrarán en la carpeta `dist/`.
-
----
 
 *We love what we do.* ❤️
