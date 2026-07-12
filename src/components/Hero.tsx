@@ -3,9 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 /* ─── Scroll logic shared between portal + text ─── */
 function useScrollExpand() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [fullyExpanded, setFullyExpanded] = useState(false);
+  const [fullyExpanded, setFullyExpanded] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     const handleWheel = (e: Event) => {
       const we = e as WheelEvent;
       if (fullyExpanded && we.deltaY < 0 && window.scrollY <= 5) {
