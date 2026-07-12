@@ -29,6 +29,7 @@
 
   /* Typography */
   --font-display: 'Zen Antique Soft', serif;
+  --font-shodo:   'Yuji Syuku', serif;
   --font-jp:      'Noto Serif JP', serif;
   --font-heading: 'Syne', sans-serif;
   --font-body:    'DM Sans', sans-serif;
@@ -45,12 +46,14 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background-color: var(--ink-soft);
+  background-color: var(--ink);
+  background-image: linear-gradient(to bottom, var(--vermillion) 0%, var(--vermillion) 50vh, var(--ink) 50vh, var(--ink) 100%);
+  background-attachment: fixed;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--ink-soft);
+  background-color: transparent;
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;

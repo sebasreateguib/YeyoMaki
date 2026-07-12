@@ -312,7 +312,9 @@
 }
 
 .hero-title .line-1 {
+  font-family: var(--font-shodo);
   color: var(--parchment);
+  display: block;
 }
 
 .hero-title .line-2 {
