@@ -192,7 +192,7 @@ export function Hero() {
         </div>
 
         {/* CENTER — video portal (absolutely positioned) */}
-        <div className="hero-col-center" aria-hidden="true" />
+        {!isMobile && <div className="hero-col-center" aria-hidden="true" />}
 
         {/* RIGHT COLUMN — subtitle + CTA */}
         <div className="hero-col-right">
@@ -214,64 +214,66 @@ export function Hero() {
       </div>
 
       {/* ─── Video portal — absolutely centered, expands on scroll ─── */}
-      <div
-        ref={videoRef}
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 10,
-          width: `${width}px`,
-          height: `${height}px`,
-          borderRadius: `${radius}px`,
-          overflow: 'hidden',
-          boxShadow: `0 ${8 + scrollProgress * 30}px ${60 + scrollProgress * 40}px rgba(0,0,0,${0.7 + scrollProgress * 0.2})`,
-          transition: 'none',
-          pointerEvents: 'none',
-        }}
-      >
-        <video
-          ref={videoElementRef}
-          src="/assets/content/SushiChefVideo.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-        {/* Vignette overlay fades as video expands */}
+      {!isMobile && (
         <div
+          ref={videoRef}
           style={{
             position: 'absolute',
-            inset: 0,
-            background: `
-              radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${0.55 - scrollProgress * 0.55}) 100%)
-            `,
-            pointerEvents: 'none',
-          }}
-        />
-        {/* Dark overlay fades as video expands */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(0,0,0,0.2)',
-            opacity: Math.max(0, 0.6 - scrollProgress * 0.6),
-            pointerEvents: 'none',
-          }}
-        />
-        {/* Gold border ring */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            width: `${width}px`,
+            height: `${height}px`,
             borderRadius: `${radius}px`,
-            border: `1px solid rgba(201,168,76,${0.35 - scrollProgress * 0.35})`,
+            overflow: 'hidden',
+            boxShadow: `0 ${8 + scrollProgress * 30}px ${60 + scrollProgress * 40}px rgba(0,0,0,${0.7 + scrollProgress * 0.2})`,
+            transition: 'none',
             pointerEvents: 'none',
           }}
-        />
-      </div>
+        >
+          <video
+            ref={videoElementRef}
+            src="/assets/content/SushiChefVideo.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          {/* Vignette overlay fades as video expands */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `
+                radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${0.55 - scrollProgress * 0.55}) 100%)
+              `,
+              pointerEvents: 'none',
+            }}
+          />
+          {/* Dark overlay fades as video expands */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.2)',
+              opacity: Math.max(0, 0.6 - scrollProgress * 0.6),
+              pointerEvents: 'none',
+            }}
+          />
+          {/* Gold border ring */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: `${radius}px`,
+              border: `1px solid rgba(201,168,76,${0.35 - scrollProgress * 0.35})`,
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+      )}
     </section>
   );
 }

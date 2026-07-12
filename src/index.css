@@ -30,6 +30,7 @@
   /* Typography */
   --font-display: 'Zen Antique Soft', serif;
   --font-shodo:   'Yuji Syuku', serif;
+  --font-hanko:   'Dela Gothic One', sans-serif;
   --font-jp:      'Noto Serif JP', serif;
   --font-heading: 'Syne', sans-serif;
   --font-body:    'DM Sans', sans-serif;
@@ -51,9 +52,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--vermillion);
-  background-image: linear-gradient(to bottom, var(--vermillion) 0%, var(--vermillion) 50vh, var(--ink) 50vh, var(--ink) 100%);
-  background-attachment: fixed;
+  background-color: var(--ink);
   color: var(--parchment);
   overflow-x: hidden;
   cursor: none;
