@@ -82,11 +82,11 @@ export function Hero() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 844;
   const isMobile = vw < 768;
 
-  const startW = isMobile ? 180 : Math.min(320, Math.max(280, vw * 0.25));
+  const startW = isMobile ? 200 : Math.min(320, Math.max(280, vw * 0.25));
   const endW = vw * (isMobile ? 1 : 0.95);
   const width = useTransform(scrollYProgress, [0, 1], [`${startW}px`, `${endW}px`]);
 
-  const startH = isMobile ? 240 : 480;
+  const startH = isMobile ? 260 : 480;
   const endH = vh * (isMobile ? 1 : 0.88);
   const height = useTransform(scrollYProgress, [0, 1], [`${startH}px`, `${endH}px`]);
 
