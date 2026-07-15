@@ -86,12 +86,12 @@ export function Hero() {
   const endW = vw * (isMobile ? 1 : 0.95);
   const width = useTransform(scrollYProgress, [0, 1], [`${startW}px`, `${endW}px`]);
 
-  const startH = isMobile ? 280 : 480; 
+  const startH = isMobile ? 280 : 480;
   const endH = vh * (isMobile ? 1 : 0.88);
   const height = useTransform(scrollYProgress, [0, 1], [`${startH}px`, `${endH}px`]);
 
   const radius = useTransform(scrollYProgress, [0, 1], [isMobile ? 30 : 20, 0]);
-  
+
   const boxShadow = useTransform(
     scrollYProgress,
     [0, 1],
@@ -100,7 +100,7 @@ export function Hero() {
 
   const vignetteOpacity = useTransform(scrollYProgress, [0, 1], [0.55, 0]);
   const vignetteBg = useTransform(vignetteOpacity, (v) => `radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${v}) 100%)`);
-  
+
   const darkOverlayOpacity = useTransform(scrollYProgress, [0, 1], [0.6, 0]);
   const goldBorderAlpha = useTransform(scrollYProgress, [0, 1], [0.35, 0]);
   const borderStyle = useTransform(goldBorderAlpha, (v) => `1px solid rgba(201,168,76,${v})`);
@@ -109,8 +109,8 @@ export function Hero() {
     <section className="hero noise" id="top" ref={heroRef}>
       <div className="hero-sticky-container">
         {/* Background */}
-        <div 
-          className="hero-bg" 
+        <div
+          className="hero-bg"
           style={{ opacity: isHidden ? 0 : 1, transition: 'opacity 0.3s ease' }}
         >
           <div className="hero-bg-image" />
@@ -120,8 +120,8 @@ export function Hero() {
           <div className="hero-gold-accent" />
         </div>
 
-        <div 
-          className="hero-jp-text" 
+        <div
+          className="hero-jp-text"
           style={{ opacity: isHidden ? 0 : 0.5, transition: 'opacity 0.3s ease' }}
         >
           我々は愛をもって料理する
@@ -133,10 +133,10 @@ export function Hero() {
         {/* ─── Main editorial layout ─── */}
         <div
           className="hero-layout"
-          style={{ 
-            opacity: isHidden ? 0 : 1, 
+          style={{
+            opacity: isHidden ? 0 : 1,
             pointerEvents: isHidden ? 'none' : 'auto',
-            transition: 'opacity 0.3s ease' 
+            transition: 'opacity 0.3s ease'
           }}
         >
           {/* LEFT COLUMN — brand identity */}
@@ -170,7 +170,7 @@ export function Hero() {
         <motion.div
           style={{
             position: 'absolute',
-            top: '50%',
+            top: isMobile ? '55%' : '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             zIndex: 10,
@@ -224,10 +224,10 @@ export function Hero() {
         </motion.div>
 
         {/* ─── Scroll Hint (Centered below video on desktop) ─── */}
-        <div 
-          className="hero-scroll-hint" 
-          style={{ 
-            opacity: isHidden ? 0 : 1, 
+        <div
+          className="hero-scroll-hint"
+          style={{
+            opacity: isHidden ? 0 : 1,
             pointerEvents: isHidden ? 'none' : 'auto',
             transition: 'opacity 0.3s ease'
           }}
