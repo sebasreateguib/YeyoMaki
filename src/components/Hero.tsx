@@ -1,85 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 
-/* ─── Scroll logic shared between portal + text ─── */
 function useScrollExpand() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [fullyExpanded, setFullyExpanded] = useState(
-    typeof window !== 'undefined' ? window.innerWidth < 768 : false
-  );
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
-
-    const handleWheel = (e: Event) => {
-      const we = e as WheelEvent;
-      if (fullyExpanded && we.deltaY < 0 && window.scrollY <= 5) {
-        setFullyExpanded(false);
-        we.preventDefault();
-        return;
-      }
-      if (!fullyExpanded) {
-        we.preventDefault();
-        setScrollProgress(prev => {
-          const next = Math.min(Math.max(prev + we.deltaY * 0.001, 0), 1);
-          if (next >= 1) setFullyExpanded(true);
-          return next;
-        });
-      }
-    };
-
-    let touchStartY = 0;
-    const handleTouchStart = (e: Event) => {
-      touchStartY = (e as TouchEvent).touches[0].clientY;
-    };
-    const handleTouchMove = (e: Event) => {
-      const te = e as TouchEvent;
-      const delta = touchStartY - te.touches[0].clientY;
-      if (fullyExpanded && delta < -20 && window.scrollY <= 5) {
-        setFullyExpanded(false);
-        te.preventDefault();
-        return;
-      }
-      if (!fullyExpanded) {
-        te.preventDefault();
-        setScrollProgress(prev => {
-          const next = Math.min(Math.max(prev + delta * 0.006, 0), 1);
-          if (next >= 1) setFullyExpanded(true);
-          return next;
-        });
-        touchStartY = te.touches[0].clientY;
-      }
-    };
     const handleScroll = () => {
-      if (!fullyExpanded) window.scrollTo(0, 0);
+      const hero = document.getElementById('top');
+      if (!hero) return;
+      
+      const rect = hero.getBoundingClientRect();
+      const scrollableDistance = hero.offsetHeight - window.innerHeight;
+      
+      if (scrollableDistance <= 0) return;
+
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(scrolled / scrollableDistance, 1));
+      
+      setScrollProgress(progress);
     };
 
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a');
-      if (anchor && anchor.hash && anchor.hash.startsWith('#') && anchor.hash !== '#top') {
-        e.preventDefault();
-        setFullyExpanded(true);
-        setTimeout(() => {
-          document.querySelector(anchor.hash)?.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', anchor.hash);
-        }, 50);
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('scroll', handleScroll);
-    document.addEventListener('click', handleAnchorClick);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial call
+    handleScroll();
 
     return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('click', handleAnchorClick);
     };
-  }, [fullyExpanded]);
+  }, []);
 
   return scrollProgress;
 }
@@ -121,6 +68,15 @@ export function Hero() {
   const scrollProgress = useScrollExpand();
   const videoRef = useRef<HTMLDivElement>(null);
   const videoElementRef = useRef<HTMLVideoElement>(null);
+  const [currentVideo, setCurrentVideo] = useState('/assets/content/yeyo2.mp4');
+
+  const handleVideoEnded = () => {
+    if (currentVideo === '/assets/content/yeyo2.mp4') {
+      setCurrentVideo('/assets/content/yeyo3.mp4');
+    } else {
+      setCurrentVideo('/assets/content/yeyo2.mp4');
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -152,18 +108,19 @@ export function Hero() {
   const isMobile = vw < 768;
 
   // Video dimensions — start width must match .hero-col-center: clamp(280px, 25vw, 320px)
-  const startW = isMobile ? Math.min(300, vw * 0.8) : Math.min(320, Math.max(280, vw * 0.25));
-  const endW = vw * (isMobile ? 0.95 : 0.95);
+  const startW = isMobile ? Math.min(200, vw * 0.5) : Math.min(320, Math.max(280, vw * 0.25));
+  const endW = vw * (isMobile ? 1 : 0.95);
   const width = startW + scrollProgress * (endW - startW);
 
-  const startH = isMobile ? 220 : 480; // Portrait portal on desktop
-  const endH = vh * 0.88;
+  const startH = isMobile ? 280 : 480; // Portrait portal on desktop & mobile
+  const endH = vh * (isMobile ? 1 : 0.88);
   const height = startH + scrollProgress * (endH - startH);
-  const radius = 20 - scrollProgress * 20;
+  const radius = isMobile ? (30 - scrollProgress * 30) : (20 - scrollProgress * 20);
 
   return (
     <section className="hero noise" id="top">
-      {/* Background */}
+      <div className="hero-sticky-container">
+        {/* Background */}
       <div className="hero-bg" style={{ opacity: fadeOut }}>
         <div className="hero-bg-image" />
         <div className="hero-bg-gradient" />
@@ -208,71 +165,71 @@ export function Hero() {
       </div>
 
       {/* ─── Video portal — absolutely centered, expands on scroll ─── */}
-      {!isMobile && (
+      <div
+        ref={videoRef}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 10,
+          width: `${width}px`,
+          height: `${height}px`,
+          borderRadius: `${radius}px`,
+          overflow: 'hidden',
+          boxShadow: `0 ${8 + scrollProgress * 30}px ${60 + scrollProgress * 40}px rgba(0,0,0,${0.7 + scrollProgress * 0.2})`,
+          transition: 'all 0.15s ease-out',
+          pointerEvents: 'none',
+        }}
+      >
+        <video
+          ref={videoElementRef}
+          src={currentVideo}
+          autoPlay
+          muted
+          loop={false}
+          playsInline
+          onEnded={handleVideoEnded}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+        {/* Vignette overlay fades as video expands */}
         <div
-          ref={videoRef}
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 10,
-            width: `${width}px`,
-            height: `${height}px`,
-            borderRadius: `${radius}px`,
-            overflow: 'hidden',
-            boxShadow: `0 ${8 + scrollProgress * 30}px ${60 + scrollProgress * 40}px rgba(0,0,0,${0.7 + scrollProgress * 0.2})`,
-            transition: 'none',
-            pointerEvents: 'none',
-          }}
-        >
-          <video
-            ref={videoElementRef}
-            src="/assets/content/SushiChefVideo.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          {/* Vignette overlay fades as video expands */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: `
+            inset: 0,
+            background: `
                 radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${0.55 - scrollProgress * 0.55}) 100%)
               `,
-              pointerEvents: 'none',
-            }}
-          />
-          {/* Dark overlay fades as video expands */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'rgba(0,0,0,0.2)',
-              opacity: Math.max(0, 0.6 - scrollProgress * 0.6),
-              pointerEvents: 'none',
-            }}
-          />
-          {/* Gold border ring */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: `${radius}px`,
-              border: `1px solid rgba(201,168,76,${0.35 - scrollProgress * 0.35})`,
-              pointerEvents: 'none',
-            }}
-          />
-        </div>
-      )}
+            pointerEvents: 'none',
+          }}
+        />
+        {/* Dark overlay fades as video expands */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(0,0,0,0.2)',
+            opacity: Math.max(0, 0.6 - scrollProgress * 0.6),
+            pointerEvents: 'none',
+          }}
+        />
+        {/* Gold border ring */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: `${radius}px`,
+            border: `1px solid rgba(201,168,76,${0.35 - scrollProgress * 0.35})`,
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
 
-      {/* ─── Scroll Hint (Centered below video on desktop) ─── */}
-      <div className="hero-scroll-hint" style={{ opacity: fadeOut, pointerEvents: fadeOut < 0.1 ? 'none' : 'auto' }}>
-        <div className="hero-scroll-line" />
-        <span>Scroll</span>
+        {/* ─── Scroll Hint (Centered below video on desktop) ─── */}
+        <div className="hero-scroll-hint" style={{ opacity: fadeOut, pointerEvents: fadeOut < 0.1 ? 'none' : 'auto' }}>
+          <div className="hero-scroll-line" />
+          <span>Scroll</span>
+        </div>
       </div>
     </section>
   );
