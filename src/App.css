@@ -479,7 +479,7 @@
     align-items: flex-start;
     min-height: 100vh;
     min-height: 100svh;
-    padding: 5rem 1.5rem 1rem;
+    padding: 5rem 1.5rem 2.8rem; /* Adjusted for 2% more separation */
     gap: 1rem;
     text-align: left;
   }
