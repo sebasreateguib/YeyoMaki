@@ -41,7 +41,7 @@ export function MakiScrollSequence() {
 
     /* Keep the canvas at the original image resolution to avoid compression */
     function sizeCanvas() {
-      if (!frames[0]) return;
+      if (!canvas || !frames[0]) return;
       canvas.width = frames[0].naturalWidth;
       canvas.height = frames[0].naturalHeight;
       // CSS object-fit: cover will handle the visual scaling inside the card
@@ -49,7 +49,7 @@ export function MakiScrollSequence() {
 
     function drawFrame(index: number) {
       const img = frames[index];
-      if (!img || !img.complete) return;
+      if (!canvas || !img || !img.complete) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       // Draw 1:1 at native resolution
       ctx.drawImage(img, 0, 0);
