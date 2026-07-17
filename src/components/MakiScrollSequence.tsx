@@ -269,7 +269,7 @@ export function MakiScrollSequence() {
 
         <div className="maki-step maki-step-4">
           <div className="maki-step-4-inner">
-            <h2 className="maki-step-title">Atrévete a<br /><em>probarlo</em></h2>
+            <h2 className="maki-step-title"><em>Pruébalo</em></h2>
             <a href="#menu" className="maki-cta-btn">Ver Menú Completo</a>
           </div>
         </div>

@@ -2023,8 +2023,13 @@
     line-height: 1.55;
   }
 
+  .maki-step-4 {
+    justify-content: flex-end !important;
+    padding-bottom: 20vh;
+  }
+
   .maki-step-4-inner {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     max-width: 80vw;
   }
 }
