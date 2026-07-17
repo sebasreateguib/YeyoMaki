@@ -3,6 +3,7 @@ import { CustomCursor } from './components/CustomCursor'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
+import { MakiScrollSequence } from './components/MakiScrollSequence'
 import { MenuSection } from './components/MenuSection'
 import { Offers } from './components/Offers'
 import { SignatureSection } from './components/SignatureSection'
@@ -18,6 +19,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <MakiScrollSequence />
         <MenuSection />
         <Offers />
         <SignatureSection />

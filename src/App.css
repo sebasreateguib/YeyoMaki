@@ -479,7 +479,8 @@
     align-items: flex-start;
     min-height: 100vh;
     min-height: 100svh;
-    padding: 5rem 1.5rem 2.4rem; /* Adjusted for 1% more separation */
+    padding: 5rem 1.5rem 2.4rem;
+    /* Adjusted for 1% more separation */
     gap: 1rem;
     text-align: left;
   }
@@ -1702,4 +1703,350 @@
 .footer-social a[aria-label="WhatsApp"]:hover {
   color: #25D366;
   border-color: #25D366;
+}
+
+/* ════════════════════════════════════════════════
+   Maki Scroll Sequence
+   ════════════════════════════════════════════════ */
+
+.maki-scroll-section {
+  position: relative;
+  background: #cecece;
+}
+
+.maki-scroll-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18vh;
+  background: linear-gradient(to bottom, rgba(206, 206, 206, 0), var(--ink));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Sticky full-height frame that CENTERS the card */
+.maki-scroll-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #cecece;
+  padding: 48px 24px 48px;
+  z-index: 1;
+}
+
+/* The card that constrains the canvas */
+.maki-scroll-card {
+  position: relative;
+  width: min(640px, 90vw);
+  height: min(480px, 68vh);
+  border-radius: 20px;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Feather the edges to blend the gradient image into the solid CSS background */
+.maki-scroll-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px 40px #cecece;
+  pointer-events: none;
+}
+
+/* Canvas fills the card exactly */
+.maki-scroll-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ── Loading overlay ────────────────────────────── */
+.maki-scroll-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #111;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+
+.maki-loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.maki-loader-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+.maki-loader-track {
+  width: min(200px, 50vw);
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.maki-loader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 99px;
+  transition: width 0.08s linear;
+}
+
+.maki-loader-count {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: rgba(245, 240, 232, 0.3);
+}
+
+/* ── Editorial Overlay ──────────────────────────── */
+.maki-content-overlay {
+  position: relative;
+  z-index: 2;
+  margin-top: -100vh;
+  width: 100%;
+}
+
+.maki-step {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5vw;
+  pointer-events: none;
+}
+
+/* Each step renders a floating ink panel */
+.maki-step-panel {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: rgba(13, 10, 8, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 2.75rem 3rem;
+  max-width: 450px;
+  position: relative;
+}
+
+/* Gold accent line on left edge */
+.maki-step-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2.5rem;
+  bottom: 2.5rem;
+  width: 3px;
+  background: linear-gradient(to bottom, #c9a84c, transparent);
+  border-radius: 99px;
+}
+
+/* Stagger — alternate left/right, never overlap the card */
+.maki-step-1 {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.maki-step-2 {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.maki-step-3 {
+  align-items: flex-start;
+  text-align: left;
+  margin-top: 5vh;
+}
+
+.maki-step-4 {
+  height: 80vh;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-end;
+  padding-bottom: 20vh;
+  pointer-events: auto;
+}
+
+/* Right-side panel flips the accent line */
+.maki-step-2 .maki-step-panel::before {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to bottom, #c9a84c, transparent);
+}
+
+/* Eyebrow — red pill badge */
+.maki-step-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #f5f0e8;
+  background-color: #c1272d;
+  padding: 6px 14px;
+  border-radius: 99px;
+  width: fit-content;
+}
+
+/* Title — large cream serif */
+.maki-step-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  color: #f5f0e8;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* Title gold accent word */
+.maki-step-title em {
+  font-style: normal;
+  color: #c9a84c;
+}
+
+/* Body copy */
+.maki-step-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(245, 240, 232, 0.65);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 360px;
+  margin: 0;
+}
+
+/* Final CTA step — full-width dark strip */
+.maki-step-4-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(13, 10, 8, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 3rem 4rem;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 4px;
+}
+
+.maki-step-4 .maki-step-title {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+}
+
+.maki-cta-btn {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 16px 40px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  pointer-events: auto;
+}
+
+.maki-cta-btn:hover {
+  background: var(--cream);
+  color: var(--ink);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+  .maki-step {
+    padding: 0 16px;
+    height: 80vh;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .maki-step-panel {
+    max-width: 80vw;
+    padding: 1.25rem 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .maki-step-panel::before,
+  .maki-step-2 .maki-step-panel::before {
+    left: 0;
+    right: auto;
+  }
+
+  .maki-step-eyebrow {
+    font-size: 0.55rem;
+    padding: 4px 10px;
+  }
+
+  .maki-step-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .maki-step-desc {
+    font-size: 0.85rem;
+    max-width: 100%;
+    line-height: 1.55;
+  }
+
+  .maki-step-4-inner {
+    padding: 2rem 1.5rem;
+    max-width: 80vw;
+  }
+}
+
+@keyframes makiHintPulse {
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+
+  50% {
+    opacity: 0.25;
+    transform: scaleY(0.6);
+  }
+}
+
+@media (max-width: 480px) {
+  .maki-scroll-card {
+    width: 92vw;
+    height: 60vw;
+    border-radius: 14px;
+  }
 }
