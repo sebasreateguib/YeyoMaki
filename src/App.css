@@ -1714,17 +1714,6 @@
   background: #cecece;
 }
 
-.maki-scroll-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 18vh;
-  background: linear-gradient(to bottom, rgba(206, 206, 206, 0), var(--ink));
-  pointer-events: none;
-  z-index: 2;
-}
 
 /* Sticky full-height frame that CENTERS the card */
 .maki-scroll-sticky {
