@@ -82,32 +82,32 @@ export function Hero() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 844;
   const isMobile = vw < 768;
 
-  // On mobile, complete the animation at 50% scroll — feels twice as fast
-  const mobileEnd = 0.5;
-  const inputRange: [number, number] = isMobile ? [0, mobileEnd] : [0, 1];
+  // Desktop only: scroll-based expansion
+  const startW = Math.min(320, Math.max(280, vw * 0.25));
+  const endW = vw * 0.95;
+  const width = useTransform(scrollYProgress, [0, 1], [`${startW}px`, `${endW}px`]);
 
-  const startW = isMobile ? 180 : Math.min(320, Math.max(280, vw * 0.25));
-  const endW = vw * (isMobile ? 1 : 0.95);
-  const width = useTransform(scrollYProgress, inputRange, [`${startW}px`, `${endW}px`]);
+  const startH = 480;
+  const endH = vh * 0.88;
+  const height = useTransform(scrollYProgress, [0, 1], [`${startH}px`, `${endH}px`]);
 
-  const startH = isMobile ? 240 : 480;
-  const endH = vh * (isMobile ? 1 : 0.88);
-  const height = useTransform(scrollYProgress, inputRange, [`${startH}px`, `${endH}px`]);
-
-  const radius = useTransform(scrollYProgress, inputRange, [isMobile ? 30 : 20, 0]);
+  const radius = useTransform(scrollYProgress, [0, 1], [20, 0]);
 
   const boxShadow = useTransform(
     scrollYProgress,
-    inputRange,
+    [0, 1],
     [`0 8px 60px rgba(0,0,0,0.7)`, `0 38px 100px rgba(0,0,0,0.9)`]
   );
 
-  const vignetteOpacity = useTransform(scrollYProgress, inputRange, [0.55, 0]);
+  const vignetteOpacity = useTransform(scrollYProgress, [0, 1], [0.55, 0]);
   const vignetteBg = useTransform(vignetteOpacity, (v) => `radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${v}) 100%)`);
 
-  const darkOverlayOpacity = useTransform(scrollYProgress, inputRange, [0.6, 0]);
-  const goldBorderAlpha = useTransform(scrollYProgress, inputRange, [0.35, 0]);
+  const darkOverlayOpacity = useTransform(scrollYProgress, [0, 1], [0.6, 0]);
+  const goldBorderAlpha = useTransform(scrollYProgress, [0, 1], [0.35, 0]);
   const borderStyle = useTransform(goldBorderAlpha, (v) => `1px solid rgba(201,168,76,${v})`);
+
+  // On mobile: nothing hides on scroll
+  const visible = isMobile ? true : !isHidden;
 
   return (
     <section className="hero noise" id="top" ref={heroRef}>
@@ -115,7 +115,7 @@ export function Hero() {
         {/* Background */}
         <div
           className="hero-bg"
-          style={{ opacity: isHidden ? 0 : 1, transition: 'opacity 0.3s ease' }}
+          style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease' }}
         >
           <div className="hero-bg-image" />
           <div className="hero-bg-gradient" />
@@ -126,11 +126,11 @@ export function Hero() {
 
         <div
           className="hero-jp-text"
-          style={{ opacity: isHidden ? 0 : 0.5, transition: 'opacity 0.3s ease' }}
+          style={{ opacity: visible ? 0.5 : 0, transition: 'opacity 0.3s ease' }}
         >
           我々は愛をもって料理する
         </div>
-        <div style={{ opacity: isHidden ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+        <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease' }}>
           <Petals />
         </div>
 
@@ -138,8 +138,8 @@ export function Hero() {
         <div
           className="hero-layout"
           style={{
-            opacity: isHidden ? 0 : 1,
-            pointerEvents: isHidden ? 'none' : 'auto',
+            opacity: visible ? 1 : 0,
+            pointerEvents: visible ? 'auto' : 'none',
             transition: 'opacity 0.3s ease'
           }}
         >
@@ -170,69 +170,77 @@ export function Hero() {
           </div>
         </div>
 
-        {/* ─── Video portal — absolutely centered, expands on scroll ─── */}
-        <motion.div
-          style={{
-            position: 'absolute',
-            top: isMobile ? '55%' : '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 10,
-            width,
-            height,
-            borderRadius: radius,
-            overflow: 'hidden',
-            boxShadow,
-            pointerEvents: 'none',
-          }}
-        >
-          <video
-            ref={videoElementRef}
-            src={currentVideo}
-            autoPlay
-            muted
-            loop={false}
-            playsInline
-            onEnded={handleVideoEnded}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          {/* Vignette overlay fades as video expands */}
-          <motion.div
+        {/* ─── Video portal ─── */}
+        {isMobile ? (
+          /* Mobile: static fixed size, no expansion */
+          <div
             style={{
               position: 'absolute',
-              inset: 0,
-              background: vignetteBg,
+              top: '55%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 10,
+              width: '180px',
+              height: '240px',
+              borderRadius: '30px',
+              overflow: 'hidden',
+              boxShadow: '0 8px 60px rgba(0,0,0,0.7)',
               pointerEvents: 'none',
             }}
-          />
-          {/* Dark overlay fades as video expands */}
+          >
+            <video
+              ref={videoElementRef}
+              src={currentVideo}
+              autoPlay
+              muted
+              loop={false}
+              playsInline
+              onEnded={handleVideoEnded}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,0.55) 100%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.2)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', inset: 0, borderRadius: '30px', border: '1px solid rgba(201,168,76,0.35)', pointerEvents: 'none' }} />
+          </div>
+        ) : (
+          /* Desktop: scroll-based expansion */
           <motion.div
             style={{
               position: 'absolute',
-              inset: 0,
-              background: 'rgba(0,0,0,0.2)',
-              opacity: darkOverlayOpacity,
-              pointerEvents: 'none',
-            }}
-          />
-          {/* Gold border ring */}
-          <motion.div
-            style={{
-              position: 'absolute',
-              inset: 0,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 10,
+              width,
+              height,
               borderRadius: radius,
-              border: borderStyle,
+              overflow: 'hidden',
+              boxShadow,
               pointerEvents: 'none',
             }}
-          />
-        </motion.div>
+          >
+            <video
+              ref={videoElementRef}
+              src={currentVideo}
+              autoPlay
+              muted
+              loop={false}
+              playsInline
+              onEnded={handleVideoEnded}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <motion.div style={{ position: 'absolute', inset: 0, background: vignetteBg, pointerEvents: 'none' }} />
+            <motion.div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.2)', opacity: darkOverlayOpacity, pointerEvents: 'none' }} />
+            <motion.div style={{ position: 'absolute', inset: 0, borderRadius: radius, border: borderStyle, pointerEvents: 'none' }} />
+          </motion.div>
+        )}
 
-        {/* ─── Scroll Hint (Centered below video on desktop) ─── */}
+        {/* ─── Scroll Hint ─── */}
         <div
           className="hero-scroll-hint"
           style={{
-            opacity: isHidden ? 0 : 1,
-            pointerEvents: isHidden ? 'none' : 'auto',
+            opacity: visible ? 1 : 0,
+            pointerEvents: visible ? 'auto' : 'none',
             transition: 'opacity 0.3s ease'
           }}
         >

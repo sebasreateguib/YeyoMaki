@@ -200,6 +200,12 @@
   background: transparent;
 }
 
+@media (max-width: 767px) {
+  .hero {
+    min-height: 100svh;
+  }
+}
+
 .hero-sticky-container {
   position: sticky;
   top: 0;
