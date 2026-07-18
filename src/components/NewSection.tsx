@@ -133,7 +133,7 @@ export function NewSection() {
               <span className="text-gold" style={{ color: '#ef4444' }}>Furai Flamin' Hot</span>
             </h3>
 
-            <p className="about-body" style={{
+            <p className="about-body desktop-only" style={{
               fontSize: '1.1rem',
               color: 'rgba(255,255,255,0.85)',
               lineHeight: '1.6'
@@ -151,20 +151,7 @@ export function NewSection() {
               Perfecto para los amantes de las texturas atrevidas y los sabores intensos.
             </p>
 
-            <a href="#contacto" className="btn" style={{
-              background: '#ef4444',
-              color: '#fff',
-              border: 'none',
-              padding: '1rem 2rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              textDecoration: 'none',
-              transition: 'background 0.2s',
-              display: 'inline-block'
-            }}
-              onMouseEnter={(e) => e.currentTarget.style.background = '#dc2626'}
-              onMouseLeave={(e) => e.currentTarget.style.background = '#ef4444'}
-            >
+            <a href="#contacto" className="btn-cta-white" style={{ background: '#ef4444', color: '#fff' }}>
               ¡Lo quiero probar!
             </a>
           </div>

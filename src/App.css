@@ -1827,50 +1827,70 @@
   pointer-events: none;
 }
 
+
+/* ── NEOBRUTALISMO JAPONÉS — step panels ───────────────────── */
 /* Each step renders a floating ink panel */
 .maki-step-panel {
   display: inline-flex;
   flex-direction: column;
   gap: 1.25rem;
-  background: rgba(13, 10, 8, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  background: var(--parchment);
+  border: 2.5px solid var(--ink);
+  box-shadow: 6px 6px 0px var(--vermillion);
+  border-radius: 0;
   padding: 2.75rem 3rem;
   max-width: 450px;
   position: relative;
+  overflow: hidden;
 }
 
-/* Gold accent line on left edge */
+/* Kanji decoration — big transparent character top-right */
+.maki-step-panel::after {
+  content: '食';
+  position: absolute;
+  top: -0.5rem;
+  right: 1rem;
+  font-family: var(--font-jp);
+  font-size: 6rem;
+  font-weight: 900;
+  color: var(--ink);
+  opacity: 0.06;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Vermillion top bar instead of left accent line */
 .maki-step-panel::before {
   content: '';
   position: absolute;
+  top: 0;
   left: 0;
-  top: 2.5rem;
-  bottom: 2.5rem;
-  width: 3px;
-  background: linear-gradient(to bottom, #c9a84c, transparent);
-  border-radius: 99px;
+  right: 0;
+  height: 4px;
+  background: var(--vermillion);
+  border-radius: 0;
 }
 
-/* Stagger — alternate left/right, never overlap the card */
-.maki-step-1 {
-  align-items: flex-start;
-  text-align: left;
+/* Step 2 kanji changes character */
+.maki-step-2 .maki-step-panel::after { content: '匠'; }
+.maki-step-3 .maki-step-panel::after { content: '鮮'; }
+
+/* Right-side panel keeps same top bar */
+.maki-step-2 .maki-step-panel::before {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  width: auto;
+  height: 4px;
+  background: var(--vermillion);
 }
 
-.maki-step-2 {
-  align-items: flex-end;
-  text-align: right;
-}
-
-.maki-step-3 {
-  align-items: flex-start;
-  text-align: left;
-  margin-top: 5vh;
-}
+/* Stagger — alternate left/right */
+.maki-step-1 { align-items: flex-start; text-align: left; }
+.maki-step-2 { align-items: flex-end; text-align: right; }
+.maki-step-3 { align-items: flex-start; text-align: left; margin-top: 5vh; }
 
 .maki-step-4 {
   height: 80vh;
@@ -1881,78 +1901,101 @@
   pointer-events: auto;
 }
 
-/* Right-side panel flips the accent line */
-.maki-step-2 .maki-step-panel::before {
-  left: auto;
-  right: 0;
-  background: linear-gradient(to bottom, #c9a84c, transparent);
-}
-
-/* Eyebrow — red pill badge */
+/* Eyebrow — solid pill on ink background */
 .maki-step-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.65rem;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #f5f0e8;
-  background-color: #c1272d;
-  padding: 6px 14px;
-  border-radius: 99px;
+  color: var(--parchment);
+  background-color: var(--ink);
+  border: 1.5px solid var(--ink);
+  padding: 5px 14px;
+  border-radius: 0;
   width: fit-content;
 }
 
-/* Title — large cream serif */
+/* Title — large bold serif, dark ink on cream */
 .maki-step-title {
-  font-family: 'Noto Serif JP', serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  color: #f5f0e8;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  color: var(--ink);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 800;
   margin: 0;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
-/* Title gold accent word */
+/* Italic em → vermillion accent */
 .maki-step-title em {
-  font-style: normal;
-  color: #ffffff;
+  font-style: italic;
+  color: var(--vermillion);
 }
 
-/* Body copy */
+/* Body copy — ink on cream */
 .maki-step-desc {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
-  color: rgba(245, 240, 232, 0.65);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(13, 10, 8, 0.72);
   line-height: 1.7;
-  font-weight: 300;
+  font-weight: 400;
   max-width: 360px;
   margin: 0;
 }
 
-/* Final CTA step — full-width dark strip */
+/* Final CTA step */
 .maki-step-4-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  background: rgba(13, 10, 8, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(201, 168, 76, 0.3);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  background: var(--parchment);
+  border: 2.5px solid var(--ink);
+  box-shadow: 6px 6px 0px var(--vermillion);
   padding: 3rem 4rem;
   width: 100%;
   max-width: 600px;
-  border-radius: 4px;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.maki-step-4-inner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--vermillion);
+}
+
+.maki-step-4-inner::after {
+  content: '味';
+  position: absolute;
+  bottom: -1rem;
+  right: 1.5rem;
+  font-family: var(--font-jp);
+  font-size: 7rem;
+  font-weight: 900;
+  color: var(--ink);
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
 .maki-step-4 .maki-step-title {
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+  color: var(--ink);
 }
+
+
 
 .maki-cta-btn {
   display: inline-block;
@@ -1988,12 +2031,18 @@
     max-width: 80vw;
     padding: 1.25rem 1.5rem;
     gap: 0.75rem;
+    box-shadow: 4px 4px 0px var(--vermillion);
   }
 
+  /* Top bar stays at top on mobile — override is not needed */
   .maki-step-panel::before,
   .maki-step-2 .maki-step-panel::before {
+    top: 0;
     left: 0;
-    right: auto;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 4px;
   }
 
   .maki-step-eyebrow {
