@@ -82,27 +82,31 @@ export function Hero() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 844;
   const isMobile = vw < 768;
 
+  // On mobile, complete the animation at 50% scroll — feels twice as fast
+  const mobileEnd = 0.5;
+  const inputRange: [number, number] = isMobile ? [0, mobileEnd] : [0, 1];
+
   const startW = isMobile ? 180 : Math.min(320, Math.max(280, vw * 0.25));
   const endW = vw * (isMobile ? 1 : 0.95);
-  const width = useTransform(scrollYProgress, [0, 1], [`${startW}px`, `${endW}px`]);
+  const width = useTransform(scrollYProgress, inputRange, [`${startW}px`, `${endW}px`]);
 
   const startH = isMobile ? 240 : 480;
   const endH = vh * (isMobile ? 1 : 0.88);
-  const height = useTransform(scrollYProgress, [0, 1], [`${startH}px`, `${endH}px`]);
+  const height = useTransform(scrollYProgress, inputRange, [`${startH}px`, `${endH}px`]);
 
-  const radius = useTransform(scrollYProgress, [0, 1], [isMobile ? 30 : 20, 0]);
+  const radius = useTransform(scrollYProgress, inputRange, [isMobile ? 30 : 20, 0]);
 
   const boxShadow = useTransform(
     scrollYProgress,
-    [0, 1],
+    inputRange,
     [`0 8px 60px rgba(0,0,0,0.7)`, `0 38px 100px rgba(0,0,0,0.9)`]
   );
 
-  const vignetteOpacity = useTransform(scrollYProgress, [0, 1], [0.55, 0]);
+  const vignetteOpacity = useTransform(scrollYProgress, inputRange, [0.55, 0]);
   const vignetteBg = useTransform(vignetteOpacity, (v) => `radial-gradient(ellipse at center, transparent 30%, rgba(13,10,8,${v}) 100%)`);
 
-  const darkOverlayOpacity = useTransform(scrollYProgress, [0, 1], [0.6, 0]);
-  const goldBorderAlpha = useTransform(scrollYProgress, [0, 1], [0.35, 0]);
+  const darkOverlayOpacity = useTransform(scrollYProgress, inputRange, [0.6, 0]);
+  const goldBorderAlpha = useTransform(scrollYProgress, inputRange, [0.35, 0]);
   const borderStyle = useTransform(goldBorderAlpha, (v) => `1px solid rgba(201,168,76,${v})`);
 
   return (
