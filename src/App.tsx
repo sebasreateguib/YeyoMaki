@@ -2,6 +2,7 @@ import './App.css'
 import { CustomCursor } from './components/CustomCursor'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
+import { NewSection } from './components/NewSection'
 import { About } from './components/About'
 import { MakiScrollSequence } from './components/MakiScrollSequence'
 import { MenuSection } from './components/MenuSection'
@@ -20,6 +21,7 @@ function App() {
         <Hero />
         <About />
         <MakiScrollSequence />
+        <NewSection />
         <MenuSection />
         <Offers />
         <SignatureSection />
