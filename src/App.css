@@ -1918,7 +1918,7 @@
 /* Title gold accent word */
 .maki-step-title em {
   font-style: normal;
-  color: #c9a84c;
+  color: #ffffff;
 }
 
 /* Body copy */
@@ -1961,8 +1961,8 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
+  color: #ffffff;
+  background: #c1272d;
   padding: 16px 40px;
   border-radius: 99px;
   text-decoration: none;
